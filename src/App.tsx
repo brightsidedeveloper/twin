@@ -1,22 +1,34 @@
 import styled from '@emotion/styled/macro'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import tw from 'twin.macro'
 
 export default function App() {
   const [state, setState] = useState(false)
+  const [time, setTime] = useState(0)
 
   return (
     <div>
-      TWIN STATE
-      <button onClick={() => setState(!state)}>Toggle</button>
+      TWIN STATE - {time < 10000 && time} -{' '}
+      <button
+        onClick={() => {
+          setState(!state)
+          setTime(Date.now())
+        }}
+      >
+        Toggle
+      </button>
       {[...new Array(50000)].map((_, i) => (
-        <Hard key={i} state={state} />
+        <Hard key={i} state={state} setTime={setTime} last={i === 50000 - 1} />
       ))}
     </div>
   )
 }
 
-function Hard({ state }: { state: boolean }) {
+function Hard({ state, last, setTime }: { state: boolean; last: boolean; setTime: Dispatch<SetStateAction<number>> }) {
+  useEffect(() => {
+    if (!last) return
+    setTime(c => Date.now() - c)
+  }, [state, last, setTime])
   return <StyledHard state={state}>Ez</StyledHard>
 }
 
