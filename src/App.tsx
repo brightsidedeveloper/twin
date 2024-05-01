@@ -20,4 +20,4 @@ function Hard({ state }: { state: boolean }) {
   return <StyledHard state={state}>Ez</StyledHard>
 }
 
-const StyledHard = styled.div(({ state }: { state: boolean }) => [tw`bg-red-500`, state && tw`bg-blue-500`])
+const StyledHard = styled.div(({ state }: { state: boolean }) => [state ? tw`bg-red-500` : tw`bg-blue-500`])
