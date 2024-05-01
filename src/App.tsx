@@ -8,15 +8,15 @@ export default function App() {
 
   return (
     <div>
-      TWIN STATE - {time < 10000 && time} -{' '}
-      <button
+      TWIN STATE - {time === 0 ? 'Click Toggle To Start' : time > 10000 ? 'Loading...' : time + 'ms'} -{' '}
+      <Button
         onClick={() => {
           setState(!state)
           setTime(Date.now())
         }}
       >
         Toggle
-      </button>
+      </Button>
       {[...new Array(50000)].map((_, i) => (
         <Hard key={i} state={state} setTime={setTime} last={i === 50000 - 1} />
       ))}
@@ -32,4 +32,5 @@ function Hard({ state, last, setTime }: { state: boolean; last: boolean; setTime
   return <StyledHard state={state}>Ez</StyledHard>
 }
 
+const Button = tw.button`bg-blue-500 p-1 text-white rounded-md my-2`
 const StyledHard = styled.div(({ state }: { state: boolean }) => [state ? tw`bg-red-500` : tw`bg-blue-500`])
